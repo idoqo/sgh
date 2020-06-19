@@ -32,6 +32,5 @@ var versionCmd = &cobra.Command{
 
 func init() {
 	versionString = fmt.Sprintf("sgh %s (built: %s, go version: %s)", SghVersion, BuildDate, GoVersion)
-	RootCmd.Version = versionString
 	RootCmd.AddCommand(versionCmd)
 }
