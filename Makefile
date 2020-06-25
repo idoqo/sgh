@@ -8,7 +8,7 @@ LDFLAGS := -X github.com/idoqo/sgh/command.GoVersion=$(GO_VERSION) $(LDFLAGS)
 LDFLAGS := -X github.com/idoqo/sgh/command.BuildDate=$(BUILD_DATE) $(LDFLAGS)
 
 bin/sgh:
-	@go build -trimpath -ldflags "$(LDFLAGS)" -o "$@" ./cmd
+	@go build -trimpath -ldflags "$(LDFLAGS)" -o "./bin/sgh" ./
 
 clean:
 	rm -f ./bin/sgh

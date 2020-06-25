@@ -2,7 +2,9 @@ package command
 
 import (
 	"fmt"
+	"github.com/idoqo/sgh/client"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 var (
@@ -19,7 +21,7 @@ var RootCmd = &cobra.Command{
 	Short: "SwaggerHub CLI",
 	Long: "Command line interface for the SwaggerHub API",
 
-	Example: "$ sgh def list",
+	Example: "$ sgh apis list",
 }
 
 var versionCmd = &cobra.Command{
@@ -33,4 +35,22 @@ var versionCmd = &cobra.Command{
 func init() {
 	versionString = fmt.Sprintf("sgh %s (built: %s, go version: %s)", SghVersion, BuildDate, GoVersion)
 	RootCmd.AddCommand(versionCmd)
+}
+
+func makeClient() (*client.Client, error) {
+	token, err := readToken()
+	if err != nil {
+		return nil, err
+	}
+
+	return client.NewClient(token), nil
+}
+
+func readToken() (string, error){
+	token := os.Getenv("SGH_TOKEN")
+	if token == "" {
+		err := fmt.Errorf("SGH_TOKEN environment variable not found")
+		return "", err
+	}
+	return token, nil
 }
